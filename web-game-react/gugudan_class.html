@@ -48,7 +48,7 @@
                             first: Math.ceil(Math.random() * 10),
                             second: Math.ceil(Math.random() * 10),
                             value: '',
-                            result: prevState.value + '! 정답',
+                            result: prevState.result + ' <- 이전 값! 그리고 ' + this.state.value + ' <- 현재 값!',
                         };
                     });
                     this.input.focus();

@@ -30,7 +30,11 @@
                     setFirst(Math.ceil(Math.random() * 9))
                     setSecond(Math.ceil(Math.random() * 9))
                     setValue('')
-                    setResult(value + ' 정답!')
+                    setResult((prevResult) => {
+                        return (
+                          result + ' ' + prevResult + ' <- 이전 값! 그리고 ' + value + ' <- 현재 값!'
+                        )
+                    })
                     inputRef.current.focus();
                 } else {
                     setValue('')
@@ -47,7 +51,7 @@
                     <p>{first} X {second} = ?</p>
                     <form onSubmit={onSubmit}>
                         <input ref={inputRef} type="number" value={value} onChange={onChange} />
-                        <button type="submit">확인</button>
+                        <button type="submit" className="btn" htmlFor="abc">확인</button>
                     </form>
                     <p>{result}</p>
                 </React.Fragment>
