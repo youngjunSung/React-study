@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- View를 만드는 라이브러리 -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <!-- UI를 브라우저에 렌더링 해주는 라이브러리 -->
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <!-- JSX 문법 컴파일해주는 babel -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <div id="root2"></div>
+    <script type="text/babel">
+        const el = <section>section</section> // JSX 사용하여 돔 생성, babel 사용하여 React.createElement로 컴파일
+        const e = React.createElement('div', {onClick: () => { this.setState({liked: true})}, type: 'submit'}, ['div', el]); // div 돔 생성
+        // React.createElement(
+        //     type,
+        //     [props],
+        //     [...children]
+        // )
+        ReactDOM.render(e, document.querySelector('#root')); // #root 돔 안에 e 돔을 렌더링
+
+        // 컴포넌트 생성 방법 : class extends / function(ES5,ES6)
+        class LikeButton extends React.Component {
+            constructor(props) { // class 내에서 객체를 생성하고 초기화하는 메서드
+                super(props), // props를 사용하기 위해 super(부모클래스 생성자 참조) 사용
+                this.state = {
+                    liked: false, // 초기값 할당
+                }
+            }
+            
+            render() {
+                return (
+                    <button onClick={()=>{this.setState({liked: true})}} type="button">class component {this.state.liked === false ? 'not clicked' : 'clicked!!!'}</button>
+                )
+            }
+        }
+        function FunComponent() {
+            return (
+                <h4>function component <LikeButton /></h4>
+            )
+        }
+        ReactDOM.render(<FunComponent />, document.querySelector('#root2'));
+    </script>
+</body>
+</html>

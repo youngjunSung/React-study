@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- View를 만드는 라이브러리 -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <!-- UI를 브라우저에 렌더링 해주는 라이브러리 -->
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <!-- JSX 문법 컴파일해주는 babel -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class ClassComponent extends React.Component {
+            // constructor(props) {
+            //     super(props);
+            //     this.state = {
+            //         first: Math.ceil(Math.random() * 10),
+            //         second: Math.ceil(Math.random() * 10),
+            //         value: '',
+            //         result: '',
+            //     };
+            //     this.onRefInput = React.createRef();
+            // }
+            // 실무에서는 주로 constructor 빼고 쓴다
+            state = {
+                first: Math.ceil(Math.random() * 10),
+                second: Math.ceil(Math.random() * 10),
+                value: '',
+                result: '',
+            };
+            
+            onSubmit = (e) => { // 클래스 내부에서 별도로 사용되는 함수는 화살표 함수로 사용해야 함 (this 때문)
+                e.preventDefault(); // 새로고침 방지
+                if (this.state.value == this.state.first * this.state.second) {
+                    // this.setState({
+                    //     first: Math.ceil(Math.random() * 10),
+                    //     second: Math.ceil(Math.random() * 10),
+                    //     value: '',
+                    //     result: this.state.value + '! 정답'
+                    // });
+                    this.setState((prevState) => { // setState 안에 this.state 가 사용되면 함수로 return 해주는 걸로 외우기 (setState는 비동기)
+                        return {
+                            first: Math.ceil(Math.random() * 10),
+                            second: Math.ceil(Math.random() * 10),
+                            value: '',
+                            result: prevState.value + '! 정답',
+                        };
+                    });
+                    this.input.focus();
+                } else {
+                    this.setState({
+                        value: '',
+                        result: this.state.value + '! 오답',
+                    });
+                    this.input.focus();
+                }
+            };
+            onChange = (e) => {
+                this.setState({ value: e.target.value })
+            };
+            // onClick = (e) => {
+            //     e.target.previousElementSibling.focus();
+            // };
+            input;
+            onRefInput = (c) => {this.input = c;}
+            render() {
+                return (
+                    <React.Fragment>
+                        <p>{this.state.first} X {this.state.second} = ?</p>
+                        <form onSubmit={this.onSubmit}>
+                            <input ref={this.onRefInput} type="number" value={this.state.value} onChange={this.onChange} />
+                            <button type="submit">확인</button>
+                        </form>
+                        <p>{this.state.result}</p>
+                    </React.Fragment>
+                    // or <> ~ </>
+                ) // ( ~ ) -> 그룹 연산자 -> 있으나 없으나 동일, 가독성 위해서 사용
+            }
+        }
+        ReactDOM.render(<div><ClassComponent /></div>, document.querySelector('#root'));
+    </script>
+</body>
+</html>

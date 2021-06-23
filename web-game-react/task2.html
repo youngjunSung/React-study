@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- View를 만드는 라이브러리 -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <!-- UI를 브라우저에 렌더링 해주는 라이브러리 -->
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+   var HelloWorld = React.createClass({
+        render: function () {
+            return (
+                <h1>Hello, World!</h1>
+            );
+        }
+    });
+
+    ReactDOM.render(
+        <div>
+            <HelloWorld/>
+        </div>,
+        document.querySelector('#root')
+    )
+    </script>
+</body>
+</html>
