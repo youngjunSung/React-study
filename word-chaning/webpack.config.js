@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const refreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 module.exports = {
     name: 'word-chaning-setting',
@@ -25,15 +26,24 @@ module.exports = {
                     }],
                     '@babel/preset-react',
                 ],
-                plugins: [],
+                plugins: [
+                    '@babel/plugin-proposal-class-properties',
+                    'react-refresh/babel'
+                ],
             },
         }],
     },
     plugins: [
         new webpack.LoaderOptionsPlugin({ debug: true }),
+        new refreshPlugin(),
     ],
     output: {
         path: path.join(__dirname, 'dist'), // path.join => 현재 폴더 안에 dist 폴더 생성
         filename: 'app.js',
+        publicPath: '/dist/',
     }, // 출력
+    devServer: {
+        publicPath: '/dist/',
+        hot: true,
+    }
 }
