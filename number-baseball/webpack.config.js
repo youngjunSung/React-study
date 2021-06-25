@@ -45,6 +45,6 @@ module.exports = {
     devServer: {
         publicPath: '/dist/',
         hot: true,
-        writeToDisk: true,
+        // writeToDisk: true, dist 생성되는 옵션
     }
 }
