@@ -1,17 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Try extends Component {
-    render() {
-        return (
-            <li>
-                {this.props.value.alphabet} - {this.props.value.number} = {this.props.index.i}번째!!
-                <p>임시 텍스트 문장111</p>
-                <p>임시 텍스트 문장</p>
-                <p>임시 텍스트 문장</p>
-                <button>임시 버튼</button>
-            </li>
-        )
-    }
+const Try = ({tryInfo, index}) => {
+    return (
+        <li>
+            {tryInfo.try} {tryInfo.result} , {index + 1}번째!!
+        </li>
+    )
 }
+// const Try = (props) => {
+//     return (
+//         <li>
+//             {props.tryInfo.try} {props.tryInfo.result} , {props.index + 1}번째!!
+//         </li>
+//     )
+// }
+// class Try extends Component {
+//     render() {
+//         return (
+//             <li>
+//                 {this.props.tryInfo.try} {this.props.tryInfo.result} , {this.props.index + 1}번째!!
+//             </li>
+//         )
+//     }
+// }
 
 export default Try;

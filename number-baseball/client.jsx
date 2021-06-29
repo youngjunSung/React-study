@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // const NumberBaseball = require('./NumberBaseball2');
-import NumberBaseball from './NumberBaseball2'
+import NumberBaseball from './NumberBaseball'
 
 
 ReactDOM.render(<NumberBaseball/>, document.querySelector('#root'));

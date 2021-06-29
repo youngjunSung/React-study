@@ -6,12 +6,20 @@ import Try from './Try';
 // webpack.config.js 에서는 노드가 실행하는거라서 import 사용하면 에러난다
 
 const getNumber = () => {
-    let randomNumber = Math.floor(Math.random() * 10).toString();
-    let randomNumber2 = Math.floor(Math.random() * 10).toString();
-    let randomNumber3 = Math.floor(Math.random() * 10).toString();
-    let randomNumber4 = Math.floor(Math.random() * 10).toString();
-    return [randomNumber, randomNumber2, randomNumber3, randomNumber4]
-}
+    // let randomNumber = Math.floor(Math.random() * 10).toString();
+    // let randomNumber2 = Math.floor(Math.random() * 10).toString();
+    // let randomNumber3 = Math.floor(Math.random() * 10).toString();
+    // let randomNumber4 = Math.floor(Math.random() * 10).toString();
+    // return [randomNumber, randomNumber2, randomNumber3, randomNumber4]
+
+    const candidate = [1,2,3,4,5,6,7,8,9];
+    const arr = [];
+    for (let i = 0; i <4; i++) {
+        const chosen = candidate.splice(Math.floor(Math.random() * (9 - i)), 1).toString();
+        arr.push(chosen);
+    }
+    return arr;
+} // 클래스 안에서 this로 사용하지 않을 경우 밖에서 정의한다.
 
 class NumberBaseball2 extends Component {
     state = {
@@ -28,21 +36,46 @@ class NumberBaseball2 extends Component {
             value: e.target.value
         })
     }
-    // 일반 함수에서 this.state 받아오려면 constructor 생성 후 this를 bind 해야함
+    // ㄴ일반 함수에서 this.state 받아오려면 constructor 생성 후 this를 bind 해야함
     // this.onChange = this.onChange.bind(this);
     onClick = (e) => {
         e.preventDefault();
-        console.log('answer ' + this.state.answer);
-        console.log('answer ' + this.state.answer.join(''));
-        console.log('value ' + this.state.value);
-        console.log('tries ' + this.state.tries);
         if (this.state.answer.join('') === this.state.value) {
-            this.setState({
-                result: '홈런~!!!',
-                tries: [...this.state.tries, {try: this.state.value, result: '홈런'}],
-                // tries: this.state.tries.push(this.state.value),
+            // [1,2,3,4].join('') === 1234
+            this.setState((prevState) => {
+                return {
+                    result: '홈런~!!!',
+                    tries: [...prevState.this.state.tries, {try: this.state.value, result: '홈런'}],
+                    // ... 은 배열의 항목을 다른 배열에 항목에 합칠 때 사용할 수 있다.
+                    // tries: this.state.tries.push(this.state.value),
+                }
             })
-            console.log(this.state.tries);
+        } else if (this.state.tries.length >= 9) {
+            this.setState({
+                result: '10번째 시도, 실패~!!',
+            })
+            alert('정답은 ' + this.state.answer + ' 였습니다. 확인을 누르면 게임이 다시 시작됩니다.')
+        } else {
+            let strike = 0;
+            let ball = 0;
+            for (let i = 0; i < 4; i++) {
+                if (this.state.value[i] === this.state.answer.join('')[i]) {
+                    strike++;
+                    this.setState({
+                        strike: strike,
+                    })
+                } else if (this.state.answer.includes(this.state.value[i])) {
+                    ball++;
+                    this.setState({
+                        ball: ball,
+                    })
+                }
+            }
+            this.setState({
+                tries: [...this.state.tries, {try: this.state.value, result: strike + '스트라이크 ' + ball + '볼'}],
+                value: '',
+            })
+            this.elInput.focus();
         }
     }
 
@@ -54,16 +87,22 @@ class NumberBaseball2 extends Component {
         {alphabet: 'e', number: '5'},
     ]
 
+    elInput;
+    inputRef = (e) => {
+        this.elInput = e;
+    }
+
     render() {
+        const { strike, ball, value, result, tries} = this.state;
         return (
             <>
-                <p>{this.state.strike}스트라이크 {this.state.ball}볼입니다.</p>
+                <p>{strike}스트라이크 {ball}볼입니다.</p>
                 <form>
-                    <input type="number" maxLength="4" value={this.state.value} onChange={this.onChange} />
+                    <input ref={this.inputRef} type="number" maxLength="4" value={value} onChange={this.onChange} />
                     <button type="submit" onClick={this.onClick}>입력</button>
                 </form>
-                <strong>{this.state.result}</strong>
-                <p>시도: {this.state.tries.length}번</p>
+                <strong>{result}</strong>
+                <p>시도: {tries.length}번</p>
                 <ul>
                     {
                     // [
@@ -81,9 +120,9 @@ class NumberBaseball2 extends Component {
                     //         <li key={e.alphabet}>{e.alphabet} - {e.number} = {i}번째</li>
                     //     )
                     // })}
-                    this.texts.map((e, i)=>{
+                    this.state.tries.map((e, i)=>{
                         return (
-                            <Try key={e.alphabet} value={e} index={i} />
+                            <Try key={i} tryInfo={e} index={i} />
                         )
                     })}
                 </ul>
