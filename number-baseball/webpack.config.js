@@ -2,6 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const refreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
+process.env.NODE_ENV = 'production';
+
 module.exports = {
     name: 'word-chaning-setting',
     mode: 'development', // 실서비스: product

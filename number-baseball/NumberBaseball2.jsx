@@ -1,6 +1,6 @@
 // const React = require('react');
 // const { useState, useRef, Component } = React;
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 // const Try = require('./Try');
 import Try from './Try';
 // webpack.config.js 에서는 노드가 실행하는거라서 import 사용하면 에러난다
@@ -31,6 +31,14 @@ class NumberBaseball2 extends Component {
         tries: [],
     }
 
+    // 랜더링 되는 조건 설정 or Component 대신 PureComponent 로 import
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        if (this.state.value !== nextState.value) {
+            return true
+        }
+        return false
+    }
+
     onChange = (e) => {
         this.setState({
             value: e.target.value
@@ -55,7 +63,7 @@ class NumberBaseball2 extends Component {
                 result: '10번째 시도, 실패~!!',
             })
             alert('정답은 ' + this.state.answer + ' 였습니다. 확인을 누르면 게임이 다시 시작됩니다.')
-        } else {
+        } else if (this.state.value != '') {
             let strike = 0;
             let ball = 0;
             for (let i = 0; i < 4; i++) {
@@ -75,7 +83,7 @@ class NumberBaseball2 extends Component {
                 tries: [...this.state.tries, {try: this.state.value, result: strike + '스트라이크 ' + ball + '볼'}],
                 value: '',
             })
-            this.elInput.focus();
+            this.elInput.current.focus();
         }
     }
 
@@ -87,10 +95,10 @@ class NumberBaseball2 extends Component {
         {alphabet: 'e', number: '5'},
     ]
 
-    elInput;
-    inputRef = (e) => {
-        this.elInput = e;
-    }
+    elInput = createRef(); // createRef 사용 시 바로 ref 에 할당하고 -> ref={this.elInput} , 함수에 current 추가해서 사용 -> this.elInput.current.focus();
+    // inputRef = (e) => {
+    //     this.elInput = e;
+    // }
 
     render() {
         const { strike, ball, value, result, tries} = this.state;
@@ -98,7 +106,7 @@ class NumberBaseball2 extends Component {
             <>
                 <p>{strike}스트라이크 {ball}볼입니다.</p>
                 <form>
-                    <input ref={this.inputRef} type="number" maxLength="4" value={value} onChange={this.onChange} />
+                    <input ref={this.elInput} type="number" maxLength="4" value={value} onChange={this.onChange} />
                     <button type="submit" onClick={this.onClick}>입력</button>
                 </form>
                 <strong>{result}</strong>

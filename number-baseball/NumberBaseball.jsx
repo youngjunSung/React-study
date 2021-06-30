@@ -28,7 +28,6 @@ const NumberBaseball = (e) => {
     }
     const onClick = (e) => {
         e.preventDefault();
-        console.log(answer);
         if (answer.join('') === value) {
             setResult('홈런~!!');
             setTries((prevState) => {
@@ -39,7 +38,7 @@ const NumberBaseball = (e) => {
         } else if (tries.length >= 9) {
             setResult('도전 실패~');
             alert('정답은 ' + answer + ' 였습니다. 확인을 누르면 게임이 다시 시작됩니다.')
-        } else {
+        } else if (value != '') {
             let strike = 0;
             let ball = 0;
             for (let i = 0; i < 4; i++) {
