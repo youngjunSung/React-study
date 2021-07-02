@@ -51,13 +51,13 @@
                             result: prevState.result + ' <- 이전 값! 그리고 ' + this.state.value + ' <- 현재 값!',
                         };
                     });
-                    this.input.focus();
+                    this.onRefInput.current.focus();
                 } else {
                     this.setState({
                         value: '',
                         result: this.state.value + '! 오답',
                     });
-                    this.input.focus();
+                    this.onRefInput.current.focus();
                 }
             };
             onChange = (e) => {
@@ -66,8 +66,9 @@
             // onClick = (e) => {
             //     e.target.previousElementSibling.focus();
             // };
-            input;
-            onRefInput = (c) => {this.input = c;}
+            // input; -> this.input.focus();
+            // onRefInput = (c) => {this.input = c;}
+            onRefInput = React.createRef();
             render() {
                 return (
                     <React.Fragment>

@@ -5,7 +5,7 @@ const refreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 // process.env.NODE_ENV = 'production';
 
 module.exports = {
-    name: 'word-chaning-setting',
+    name: 'response-check',
     mode: 'development', // 실서비스: product
     devtool: 'eval', // 실서비스: hidden-source-map
     resolve: {
