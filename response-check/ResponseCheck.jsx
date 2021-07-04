@@ -4,19 +4,31 @@ import React, { useState } from 'react';
 
 const ResponseCheck = () => {
     const [state, setState] = useState('waiting');
-    const [message, setMessage] = useState('클릭해서 시작하세요');
+    const [message, setMessage] = useState('waiting-클릭해서 시작하세요');
     const [result, setResult] = useState([1,3]);
+
+    const timeOut = setTimeout(() => {
+        setState('now');
+        setMessage('now-지금 클릭!');
+        console.log('123');
+    }, Math.ceil(Math.random() * 1000) + 2000)
 
     const onClickScreen = () => {
         if (state === 'waiting') {
             setState('ready');
-            setMessage('초록색이 되면 클릭하세요')
+            setMessage('ready-초록색이 되면 클릭하세요')
             setTimeout(() => {
                 setState('now');
-                setMessage('지금 클릭!');
+                setMessage('now-지금 클릭!');
+                console.log('123');
             }, Math.ceil(Math.random() * 1000) + 2000)
-        } else if (state === 'waiting') {
-
+        } else if (state === 'ready') {
+            setState('waiting');
+            setMessage('waiting-넘 빠름, 초록되면 클릭하기!')
+            clearTimeout(timeOut);
+        } else if (state === 'now') {
+            setState('waiting');
+            setMessage('waiting-클릭해서 시작하세요')
         }
     }
 
