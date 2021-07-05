@@ -53,7 +53,7 @@ class NumberBaseball2 extends Component {
             this.setState((prevState) => {
                 return {
                     result: '홈런~!!!',
-                    tries: [...prevState.this.state.tries, {try: this.state.value, result: '홈런'}],
+                    tries: [...prevState.tries, {try: this.state.value, result: '홈런'}],
                     // ... 은 배열의 항목을 다른 배열에 항목에 합칠 때 사용할 수 있다.
                     // tries: this.state.tries.push(this.state.value),
                 }
