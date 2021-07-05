@@ -8,6 +8,8 @@ class ResponseCheck extends Component {
     }
 
     timeOut;
+    startTime;
+    endTime;
 
     onClickScreen = () => {
         const {state, message, result} = this.state;
@@ -21,6 +23,7 @@ class ResponseCheck extends Component {
                     state: 'now',
                     message: 'now-지금 클릭!'
                 })
+                this.startTime = new Date();
             }, Math.ceil(Math.random() * 1000) + 2000)
         } else if (state === 'ready') {
             this.setState({
@@ -29,9 +32,13 @@ class ResponseCheck extends Component {
             })
             clearTimeout(this.timeOut);
         } else if (state === 'now') {
-            this.setState({
-                state: 'waiting',
-                message: 'waiting-클릭해서 시작하세요'
+            this.endTime = new Date();
+            this.setState((prevState) => {
+                return {
+                    state: 'waiting',
+                    message: 'waiting-클릭해서 시작하세요',
+                    result: [...prevState.result, this.endTime - this.startTime],
+                }
             })
         }
     }
@@ -40,8 +47,16 @@ class ResponseCheck extends Component {
         return (
             result.length === 0 
             ? null
-            : <p>평균 시간: {result.reduce((a, c)=> a + c) / result.lenght}ms</p>
+            : <>
+                <p>평균 시간: {result.reduce((a, c) => a + c) / result.length}ms</p>
+                <button onClick={this.reset}>리셋</button>
+            </>
         )
+    }
+    reset = () => {
+        this.setState({
+            result: []
+        })
     }
 
     render() {

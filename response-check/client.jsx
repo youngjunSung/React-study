@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // const ResponseCheck = require('./ResponseCheck');
-import ResponseCheck from './ResponseCheck2'
+import ResponseCheck from './ResponseCheck'
 
 
 ReactDOM.render(<ResponseCheck/>, document.querySelector('#root'));
