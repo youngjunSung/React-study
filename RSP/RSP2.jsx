@@ -33,7 +33,7 @@ const RSP = () => {
         return () => { // componentWillUnmount 역할
             clearInterval(interval.current);
         }
-    }, [imgCoord])
+    }, [imgCoord]) // 배열에 넣은 값이 바뀔 때 useEffect가 실행된다.
 
     const changeHand = () => {
         if (imgCoord === rspCoords.바위) {
