@@ -5,7 +5,7 @@ const Td = memo(({rowIndex, cellIndex, dispatch, cellData}) => {
     // 함수 컴포넌트를 memo로 감싸서 state나 props가 변하는 경우에만 리렌더링 되도록 설정
     console.log('td render');
     const onClickTd = useCallback(() => {
-        // 불필요하게 함수가 호출되는 것을 방지하기 위해 useCallback 사용
+        // 불필요하게 함수가 호출되는 것을 방지하기 위해 useCallback 사용 -> 캐싱해주는 것이라고 봐도 될듯
         // 단, 바뀌는 값은 [] 에 넣어서 감지할 수 있도록 해야함
         console.log(rowIndex, cellIndex, cellData);
         if (cellData) {
