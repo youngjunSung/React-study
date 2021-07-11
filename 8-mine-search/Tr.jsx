@@ -2,11 +2,11 @@ import React, {useRef, useContext} from 'react';
 import Td from './Td';
 import { TableContext } from './MineSearch';
 
-const Tr = () => {
+const Tr = ({rowIndex}) => {
     const {tableData} = useContext(TableContext);
     return (
         <tr>
-            {Array(tableData[0].length).fill().map((td, i) => <Td />)}
+            {Array(tableData[0].length).fill().map((td, i) => <Td rowIndex={rowIndex} cellIndex={i} />)}
         </tr>
     )
 }

@@ -7,7 +7,7 @@ const Table = () => {
     return (
         <table>
             <tbody>
-                {Array(tableData.length).fill().map((tr, i) => <Tr />)}
+                {Array(tableData.length).fill().map((tr, i) => <Tr rowIndex={i} />)}
             </tbody>
         </table>
     )
